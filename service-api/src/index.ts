@@ -1,25 +1,27 @@
 import express, { Request, Response } from "express";
+import { handleAveragePairPriceRequest } from "./handleAveragePairPriceRequest";
+
+require("dotenv").config();
+
+const enabledExchanges = process.env.ENABLED_EXCHANGES?.split(",") ?? [];
+const enabledPairs = process.env.ENABLED_PAIRS?.split(",") ?? [];
 
 const app = express();
-
 app.use(express.json());
-
-interface MessageRequestParams {
-  pair: string;
-}
-
 app.get(
   "/getAveragePairPrice/:pair",
-  async (req: Request<MessageRequestParams, {}, {}>, res: Response) => {
-    const HARDCODED_PRICE = 1.42;
-
+  async (req: Request<{ pair: string }, {}, {}>, res: Response) => {
     const { pair } = req.params;
+
     console.log(`Received request for: ${pair}`);
-    if (pair === "BTCUSD") {
+
+    if (enabledPairs.includes(pair)) {
+      const averagePrice = await handleAveragePairPriceRequest(pair);
+
       res.send({
         status: "success",
         data: {
-          price: HARDCODED_PRICE,
+          price: averagePrice,
         },
       });
     } else {

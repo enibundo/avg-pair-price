@@ -11,10 +11,13 @@
     "all": "npm run clean && npm run build && npm run start"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "ioredis": "^5.4.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
+    "@types/ioredis": "^5.0.0",
     "@types/node": "22.10.6",
     "@typescript-eslint/eslint-plugin": "8.20.0",
     "@typescript-eslint/parser": "8.20.0",
