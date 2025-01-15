@@ -11,8 +11,10 @@
     "all": "npm run clean && npm run build && npm run start"
   },
   "dependencies": {
+    "@types/ws": "^8.5.13",
     "dotenv": "^16.4.7",
-    "ioredis": "^5.4.2"
+    "ioredis": "^5.4.2",
+    "ws": "^8.18.0"
   },
   "devDependencies": {
     "@types/node": "22.10.6",

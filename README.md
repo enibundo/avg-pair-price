@@ -56,7 +56,7 @@ I went for a microservice architecture. We will have services specialised per ex
 Architecture Schema: arrow direction shows information flow direction</div>
 
 <br/>
-Everytime a worker service has a new price it will persist it independently. 
+Everytime a worker service has a new price it will persist it independently.
 
 This architecture permits us to dynamically add new exchanges and decomission old exchanges. We could "temporarily disable" exchanges by configuring the API service to ignore a specific worker service.
 
@@ -76,7 +76,7 @@ Our persistence will look like this:
 | BINANCE/BTCUSDT | 1.3 |
 | HUOBI/BTCUSDT | 1.35 |
 
-Here is an example of calculating an average price from dummy data produced by two services (kraken and binance) for example:
+Here is an example logs of calculating an average price from dummy data produced by two services (kraken and binance) for example:
 ![](images/average-price-from-sources.png)
 
 #### Tech-Stack
