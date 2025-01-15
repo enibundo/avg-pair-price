@@ -1,15 +1,25 @@
 # avg-pair-price
 
+# Table of contents
+
+1. [Introduction](#introduction)
+2. [Architecture](#architecture)
+3. [Tech Stack](#tech-stack)
+
 #### Introduction
 
 The aim of this backend is to have an average price of 3 (or more) crypto exchanges for a given pair.
 
-As an example we will focus on the `BTCUSD` pair but the next solution is generic and could be used for many pairs.
+As an example we will focus on the `BTCUSD` pair but the solution is generic and could be used for many pairs.
 
 We will expose the average price of the requested pair through a REST API for our clients.
 
 Example request:
-`curl http://localhost:3000/getPairPrice/BTCUSD -H "Accept: application/json"`
+
+```sh
+curl http://localhost:3000/getPairPrice/BTCUSDT \
+-H "Accept: application/json"
+```
 
 Success example response:
 
@@ -57,7 +67,7 @@ Our persistence will look like this:
 | BINANCE/BTCUSDT |    1.3    |
 | HUOBI/BTCUSDT   |   1.35    |
 
-#### Stack
+#### Tech-Stack
 
 I will use:
 
