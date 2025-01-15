@@ -10,7 +10,7 @@
 
 The aim of this backend is to have an average price of 3 (or more) crypto exchanges for a given pair.
 
-As an example we will focus on the `BTCUSDT` pair but the solution is generic and could be used for many pairs.
+As an example we will focus on the `BTCUSDT` pair but the solution is generic. We can specify granularity of `ENABLED_PAIRS` per each exchange and `ENABLED_EXCHANGES` for the whole system.
 
 We will expose the average price of the requested pair through a REST API for our clients.
 
@@ -76,9 +76,33 @@ Our persistence will look like this:
 | BINANCE/BTCUSDT | 1.3 |
 | HUOBI/BTCUSDT | 1.35 |
 
+Each entry will have a TTL (let's say 5 seconds, after which it disappears). If a service is down it's persistence slot will not be visible anymore for example.
+
+We could upgrade the persistence to have a longer TTL and store data for 24h instead, and when calculating the average we ignore entries that are too old. I didn't go for this solution as the current system is interested in the latest average midPrice at a given time.
+
 Here is an example of logs when calculating an average price from real data produced by two services (kraken and binance) for example:
 
 ![](images/average-price-from-sources.png)
+
+#### Configuration
+
+Not much configuration is needed. There are no secrets in the configuration as we used the public APIs.
+
+Api service knows `ENABLED_EXCHANGES` which permits it to ignore disabled exchanges (even if they are running at some moment).
+
+Each service knows it's name as an env variable called `EXCHANGE_NAME` (which could eventually be static as well). It should match the `ENABLED_EXCHANGES`.
+
+Each worker service knows `ENABLED_PAIRS` list which permits the service to read interesting data.
+
+Api service knows `ENABLED_PAIRS` so it could return error to client if a non-treated pair is requested (even if it is being fetch by one or many workers, we have the choice to not serve it).
+
+In terms of rate limiting:
+
+- HTX: we have 4,000 reqs for 5 minutes permited. It let's us with a comfortable 10 reqs per second (10 \* 60 \* 5 = 3,000 reqs for 5 minutes).
+  https://www.htx.com/en-us/opend/newApiPages/?id=7ec4a0fc-7773-11ed-9966-0242ac110003
+
+- KRAKEN: 1 per second seems the suggested rate to not be blocked by them.
+  https://support.kraken.com/hc/en-us/articles/206548367-What-are-the-API-rate-limits-#1
 
 #### Tech-Stack
 
