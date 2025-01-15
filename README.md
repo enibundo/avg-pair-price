@@ -10,7 +10,7 @@
 
 The aim of this backend is to have an average price of 3 (or more) crypto exchanges for a given pair.
 
-As an example we will focus on the `BTCUSD` pair but the solution is generic and could be used for many pairs.
+As an example we will focus on the `BTCUSDT` pair but the solution is generic and could be used for many pairs.
 
 We will expose the average price of the requested pair through a REST API for our clients.
 
@@ -56,6 +56,9 @@ This architecture permits us to dynamically add new exchanges and decomission ol
 Each worker service will be independent and will have different logic to fetch data, respecting specific limits of each exchange, and using specific protocol that the exchanges permit us.
 
 The presentation/api service, whenever called, will compute the average of the latest information we have from each service. We are not interested in historical data in our case and we only need _latest known_ average price.
+
+> 💡 Idea:
+> Now we will be reading N (number of enabled exchanges) decimals from redis and calculate their average per each client request. We could further optimise API response time (client side) and calculate the average _per each exchange price update_ and persist that price _"on the go"_. I will not implement this pattern
 
 The persistence will be Redis and we will use its data structure sets (https://redis.io/technology/data-structures/) since we only need to store one value per exchange-currencyPair.
 
