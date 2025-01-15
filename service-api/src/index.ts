@@ -25,7 +25,9 @@ app.get(
     } else {
       res.send({
         status: "error",
-        message: `Invalid pair ${pair}`,
+        error: {
+          message: `Invalid pair ${pair}`,
+        },
       });
     }
   }
