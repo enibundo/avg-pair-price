@@ -77,6 +77,7 @@ Our persistence will look like this:
 | HUOBI/BTCUSDT | 1.35 |
 
 Here is an example logs of calculating an average price from dummy data produced by two services (kraken and binance) for example:
+
 ![](images/average-price-from-sources.png)
 
 #### Tech-Stack
