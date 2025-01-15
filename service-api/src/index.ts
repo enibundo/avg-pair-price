@@ -3,7 +3,6 @@ import { handleAveragePairPriceRequest } from "./handleAveragePairPriceRequest";
 
 require("dotenv").config();
 
-const enabledExchanges = process.env.ENABLED_EXCHANGES?.split(",") ?? [];
 const enabledPairs = process.env.ENABLED_PAIRS?.split(",") ?? [];
 
 const app = express();

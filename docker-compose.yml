@@ -20,8 +20,15 @@ services:
     build:
       context: ./service-binance
     container_name: avg-price-service-binance
-    ports:
-      - "3002:3002"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  service-kraken:
+    build:
+      context: ./service-kraken
+    container_name: avg-price-service-kraken
     environment:
       - REDIS_HOST=redis
     depends_on:
