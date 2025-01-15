@@ -17,7 +17,7 @@ We will expose the average price of the requested pair through a REST API for ou
 Example request:
 
 ```sh
-curl http://localhost:3000/getPairPrice/BTCUSDT \
+curl http://localhost:3000/getAveragePairPrice/BTCUSDT \
 -H "Accept: application/json"
 ```
 
@@ -49,7 +49,7 @@ Main focus is having a performant, scalable and uncoupled backend system that co
 
 ![](images/architecture.png)
 
-I will have one service per exchange (let's call them worker services) and one service for the API. Everytime a worker service has a new price it will persist it.
+There is one service exchange (let's call them worker services) and one service for the API. Everytime a worker service has a new price it will persist it.
 
 This architecture permits us to dynamically add new exchanges and decomission old exchanges. We could "temporarily disable" exchanges by configuring the API service to ignore a specific worker service.
 

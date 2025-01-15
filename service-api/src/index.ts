@@ -9,7 +9,7 @@ interface MessageRequestParams {
 }
 
 app.get(
-  "/getAveragePrice/:pair",
+  "/getAveragePairPrice/:pair",
   async (req: Request<MessageRequestParams, {}, {}>, res: Response) => {
     const HARDCODED_PRICE = 1.42;
 
@@ -33,6 +33,5 @@ app.get(
   }
 );
 
-// Start the server
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => console.log(`Service One listening on port ${PORT}`));

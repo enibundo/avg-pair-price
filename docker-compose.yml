@@ -1,0 +1,28 @@
+services:
+  redis:
+    image: redis:latest
+    container_name: avg-price-redis
+    ports:
+      - "6379:6379"
+
+  service-api:
+    build:
+      context: ./service-api
+    container_name: avg-price-service-api
+    ports:
+      - "3000:3000"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+
+  service-binance:
+    build:
+      context: ./service-binance
+    container_name: avg-price-service-binance
+    ports:
+      - "3002:3002"
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
