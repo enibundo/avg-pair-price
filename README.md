@@ -58,7 +58,7 @@ Each worker service will be independent and will have different logic to fetch d
 The presentation/api service, whenever called, will compute the average of the latest information we have from each service. We are not interested in historical data in our case and we only need _latest known_ average price.
 
 > 💡 Idea:
-> Now we will be reading N (number of enabled exchanges) decimals from redis and calculate their average per each client request. We could further optimise API response time (client side) and calculate the average _per each exchange price update_ and persist that price _"on the go"_. I will not implement this pattern
+> Now we will be reading N (number of enabled exchanges) decimals from redis and calculate their average per each client request. We could further optimise API response time (client side) and calculate the resulting average price _for every exchange price update_ and persist that price _"on the go"_. Whenever we treat a client request we would only make one read. I will not implement this pattern
 
 The persistence will be Redis and we will use its data structure sets (https://redis.io/technology/data-structures/) since we only need to store one value per exchange-currencyPair.
 
