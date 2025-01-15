@@ -1,5 +1,6 @@
 import Redis from "ioredis";
 import { getMidPrice } from "./krakenApi";
+
 require("dotenv").config();
 
 const exchangeName = process.env.EXCHANGE_NAME;
@@ -10,12 +11,16 @@ const redis = new Redis({
 
 const updatePrice = async () => {
   const pair = "BTCUSDT";
+
   const newPrice = await getMidPrice(pair);
+
   await redis.set(`${exchangeName}/${pair}`, newPrice);
-  await redis.expire(`${exchangeName}/${pair}`, 2); // TTL 2 seconds
+
+  // TTL 2 seconds, we don't want to keep stale data
+  await redis.expire(`${exchangeName}/${pair}`, 2);
 
   console.log(`Updated price for ${exchangeName}/${pair} to ${newPrice}`);
 };
 
-// update price every 1 seconds
+// update price every 2 seconds
 setInterval(updatePrice, 2000);
