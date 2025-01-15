@@ -8,6 +8,7 @@
     "dev": "ts-node src/index.ts",
     "lint": "eslint src",
     "clean": "rimraf dist",
+    "ci": "npm run clean && npm install",
     "all": "npm run clean && npm run build && npm run start"
   },
   "dependencies": {
