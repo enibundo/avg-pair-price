@@ -1,6 +1,6 @@
 # avg-pair-price
 
-# Table of contents
+#### Table of contents
 
 1. [Introduction](#introduction)
 2. [Architecture](#architecture)
@@ -60,12 +60,14 @@ The presentation/api service, whenever called, will compute the average of the l
 The persistence will be Redis and we will use its data structure sets (https://redis.io/technology/data-structures/) since we only need to store one value per exchange-currencyPair.
 
 Our persistence will look like this:
-
-| Exchange/Pair   | LastPrice |
+| Exchange/Pair | LastPrice |
 | :-------------- | :-------: |
-| KRAKEN/BTCUSDT  |    1.2    |
-| BINANCE/BTCUSDT |    1.3    |
-| HUOBI/BTCUSDT   |   1.35    |
+| KRAKEN/BTCUSDT | 1.2 |
+| BINANCE/BTCUSDT | 1.3 |
+| HUOBI/BTCUSDT | 1.35 |
+
+Here is an example of calculating an average price from dummy data produced by two services (kraken and binance) for example:
+![](images/average-price-from-sources.png)
 
 #### Tech-Stack
 
