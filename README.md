@@ -47,9 +47,11 @@ Main focus is having a performant, scalable and uncoupled backend system that co
 
 #### Architecture
 
+<div align="center">
+
 ![](images/architecture.png)
 
-<div align="center">Architecture Schema: arrow direction shows information flow direction</div>
+Architecture Schema: arrow direction shows information flow direction</div>
 
 <br/>
 There is one service exchange (let's call them worker services) and one service for the API. Everytime a worker service has a new price it will persist it.
