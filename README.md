@@ -47,6 +47,8 @@ Main focus is having a performant, scalable and uncoupled backend system that co
 
 #### Architecture
 
+I went for a microservice architecture. We will have services specialised per exchange (worker services) that will have their lifecycle and one API service that handles user requests.
+
 <div align="center">
 
 ![](images/architecture.png)
@@ -54,7 +56,7 @@ Main focus is having a performant, scalable and uncoupled backend system that co
 Architecture Schema: arrow direction shows information flow direction</div>
 
 <br/>
-There is one service exchange (let's call them worker services) and one service for the API. Everytime a worker service has a new price it will persist it.
+Everytime a worker service has a new price it will persist it independently. 
 
 This architecture permits us to dynamically add new exchanges and decomission old exchanges. We could "temporarily disable" exchanges by configuring the API service to ignore a specific worker service.
 
