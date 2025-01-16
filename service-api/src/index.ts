@@ -20,6 +20,7 @@ app.get(
       res.send({
         status: "success",
         data: {
+          pair,
           price: averagePrice,
         },
       });

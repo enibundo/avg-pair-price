@@ -30,7 +30,8 @@ Success example response:
 {
   "status": "success",
   "data": {
-    "price": 1.2321
+    "pair": "BTCUSDT",
+    "price": 99379.68666666666
   }
 }
 ```
@@ -137,4 +138,4 @@ Possible improvements are:
 - wrap it up in a k8s cluster to have automatic pod handling
 - add configuration for order book depth for each service
 - wrap up exchange APIs in small SDKs instead of directly using fetch
-- remove `runall.sh` and use `nx` or a global `package.json`
+- remove `run-backend.sh` and use `nx` or a global `package.json`
