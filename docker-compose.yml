@@ -33,3 +33,12 @@ services:
       - REDIS_HOST=redis
     depends_on:
       - redis
+
+  service-huobi:
+    build:
+      context: ./service-huobi
+    container_name: avg-price-service-huobi
+    environment:
+      - REDIS_HOST=redis
+    depends_on:
+      - redis

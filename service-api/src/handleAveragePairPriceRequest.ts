@@ -1,8 +1,11 @@
 import Redis from "ioredis";
 require("dotenv").config();
 
-const enabledExchanges = process.env.ENABLED_EXCHANGES?.split(",") ?? [];
-console.log("enabledExchanges", enabledExchanges);
+const enabledExchanges = (
+  process.env.ENABLED_EXCHANGES?.split(",") ?? []
+).filter((x) => x.trim().length > 0);
+
+console.log("Enabled Exchanges", enabledExchanges);
 
 const redis = new Redis({
   host: process.env.REDIS_HOST || "localhost",

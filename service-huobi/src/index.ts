@@ -22,5 +22,5 @@ const updatePrice = async () => {
   console.log(`Updated price for ${exchangeName}/${pair} to ${newPrice}`);
 };
 
-// update price every 2 seconds
-setInterval(updatePrice, 2000);
+// update price every 100 milli-seconds
+setInterval(updatePrice, 100);
