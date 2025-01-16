@@ -110,5 +110,4 @@ I will use:
 - NodeJS
 - Express
 - Docker
-- Kubernetes
 - Redis
