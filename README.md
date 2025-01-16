@@ -3,16 +3,19 @@
 #### Table of contents
 
 1. [Introduction](#introduction)
-2. [Architecture](#architecture)
-3. [Tech Stack](#tech-stack)
+2. [Running](#running)
+3. [Architecture](#architecture)
+4. [Techstack](#tech-stack)
+5. [Configuration](#configuration)
+6. [Improvements](#improvements)
 
 #### Introduction
 
-The aim of this backend is to have an average price of 3 (or more) crypto exchanges for a given pair.
+The aim of this backend is to have the latest (average) price of 3 (or more) crypto exchanges for a given pair at a specific time.
 
 As an example we will focus on the `BTCUSDT` pair but the solution is generic. We can specify granularity of `ENABLED_PAIRS` per each exchange and `ENABLED_EXCHANGES` for the whole system.
 
-We will expose the average price of the requested pair through a REST API for our clients.
+We will expose this func average price of the requested pair through a REST API for our clients.
 
 Example request:
 
@@ -44,6 +47,20 @@ Failure example response:
 ```
 
 Main focus is having a performant, scalable and uncoupled backend system that could scale and upgrade without downtime.
+
+#### Running
+
+To run the current project all we need is:
+
+- install docker
+- pull this repo
+- `sh run-backend.sh`
+
+![](images/installation.png)
+
+- once we see price updateds we can run `sh fetch-price.sh BTCUSDT` (that does nothing but a curl)
+
+![](images/fetch-price.png)
 
 #### Architecture
 
@@ -82,19 +99,27 @@ Here is an example of logs when calculating an average price from real data prod
 
 ![](images/average-price-from-sources.png)
 
+#### Tech-Stack
+
+I will use typescript and nodejs for all services. Express for api service. Redis for persistence layer. Docker for containerization.
+
 #### Configuration
 
-Not much configuration is needed. There are no secrets in the configuration as we used the public APIs.
+Configuration of services is inside .env for each one of them.
+
+###### Api Service
 
 Api service knows `ENABLED_EXCHANGES` which permits it to ignore disabled exchanges (even if they are running at some moment).
 
-Each service knows it's name as an env variable called `EXCHANGE_NAME` (which could eventually be static as well). It should match the `ENABLED_EXCHANGES`.
-
-Each worker service knows `ENABLED_PAIRS` list which permits the service to read interesting data.
-
 Api service knows `ENABLED_PAIRS` so it could return error to client if a non-treated pair is requested (even if it is being fetch by one or many workers, we have the choice to not serve it).
 
-In terms of rate limiting:
+###### Worker services
+
+Each worker service knows it's name as an env variable called `EXCHANGE_NAME` (which could eventually be static as well). It should match the `ENABLED_EXCHANGES`.
+
+Each worker service knows `ENABLED_PAIRS` list which permits the service to read interesting data. We have possibility to granularly enable disable pairs per service.
+
+In terms of rate limiting for REST worker services:
 
 - HTX: we have 4,000 reqs for 5 minutes permited. It let's us with a comfortable 10 reqs per second (10 \* 60 \* 5 = 3,000 reqs for 5 minutes).
   https://www.htx.com/en-us/opend/newApiPages/?id=7ec4a0fc-7773-11ed-9966-0242ac110003
@@ -102,12 +127,14 @@ In terms of rate limiting:
 - KRAKEN: 1 per second seems the suggested rate to not be blocked by them.
   https://support.kraken.com/hc/en-us/articles/206548367-What-are-the-API-rate-limits-#1
 
-#### Tech-Stack
+#### Improvements
 
-I will use:
+Possible improvements are:
 
-- Typescript
-- NodeJS
-- Express
-- Docker
-- Redis
+- handle rate limiting dynamically (slow down, go faster if needed)
+- handle binance's WSS error and reconnection gracefully
+- permit dynamic pair adding without downtime
+- wrap it up in a k8s cluster to have automatic pod handling
+- add configuration for order book depth for each service
+- wrap up exchange APIs in small SDKs instead of directly using fetch
+- remove `runall.sh` and use `nx` or a global `package.json`
