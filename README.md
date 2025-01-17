@@ -96,7 +96,7 @@ Our persistence will look like this:
 
 Each entry will have a TTL (let's say 5 seconds, after which it disappears). If a service is down it's persistence slot will not be visible anymore for example.
 
-Here is an example of logs when calculating an average price from real data produced by two services (kraken and binance) for example:
+Here is an example of logs when calculating an average price from real data produced by three different services (kraken, binance and huobi) for example:
 
 ![](images/average-price-from-sources.png)
 
