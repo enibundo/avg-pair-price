@@ -94,7 +94,7 @@ Our persistence will look like this:
 | BINANCE/BTCUSDT | 1.3 |
 | HUOBI/BTCUSDT | 1.35 |
 
-Each entry will have a TTL (let's say 5 seconds, after which it disappears). If a service is down it's persistence slot will not be visible anymore for example.
+Each entry will have a TTL (let's say 5 seconds, after which it disappears). If a service is down its persistence slot will not be visible anymore for example.
 
 Here is an example of logs when calculating an average price from real data produced by three different services (kraken, binance and huobi) for example:
 
